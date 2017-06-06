@@ -14,6 +14,7 @@ app = Flask(__name__)
 ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
 AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
 sheriff = "+16047209499"
+#sheriff = "+12063932973"
 inbound = "+16046702633"
 
 scope = ['https://spreadsheets.google.com/feeds']
@@ -33,7 +34,7 @@ def add():
         sheet.insert_row([time, number, message_body], 2)
         fort = fortunes.list[randint(0, len(fortunes.list))]
         message = "The sheriff has been alerted.\nYour fortune: {}.".format(fort)
-	sheriff_msg = "New task:\n\n{}\n{}\n\nneeds.revolvercoffee.ca".format(message_body, number)
+	sheriff_msg = "New task:\n\n{}\nFrom: {}\n\nneeds.revolvercoffee.ca".format(message_body, number)
 	twilio_client.messages.create(to=sheriff, from_=inbound, body=sheriff_msg)
 
     return str(MessagingResponse().message(message))
